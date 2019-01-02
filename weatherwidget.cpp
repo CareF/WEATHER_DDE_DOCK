@@ -15,7 +15,7 @@ WeatherWidget::WeatherWidget(const ForcastWidget *wgt, QWidget *parent)
 {
     sw = "Weather";
     temp = "Temp";
-    pixmap = QPixmap(":/"+forcastwidget->theme()+"/icon/na.png");
+    pixmap = QPixmap(QString(":/%1/icon/%1/na.png").arg(forcastwidget->theme()));
 }
 
 bool WeatherWidget::enabled()
@@ -40,7 +40,7 @@ QSize WeatherWidget::sizeHint() const
             size = FM.boundingRect(temp).size() + QSize(10,FM.boundingRect(temp).height());
         }
     }else{
-        size = QPixmap(":/"+forcastwidget->theme()+"icon/na.png").size();
+        size = QPixmap(QString(":/%1/icon/%1/na.png").arg(forcastwidget->theme())).size();
     }
     return size;
 }
