@@ -1,4 +1,7 @@
 # DDE_Dock_Weather
+
+This is a fork from [sonichy](https://github.com/sonichy/WEATHER_DDE_DOCK) with theme options feature. 
+
 Deepin Linux DDE-Dock weather forcast plugin.  
 [Releases](../../releases/)  
 install：./install.sh  
