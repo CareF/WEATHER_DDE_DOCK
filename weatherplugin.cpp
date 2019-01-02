@@ -171,7 +171,7 @@ void WeatherPlugin::invokedMenuItem(const QString &itemKey, const QString &menuI
 
 }
 
-const QStringList WeatherPlugin::themeSet({"hty"});
+const QStringList WeatherPlugin::themeSet({"hty", "hty_resized", "gray"});
 void WeatherPlugin::changeTheme() {
     QDialog *dialog = new QDialog;
     dialog->setWindowTitle("Change Theme");
@@ -182,6 +182,7 @@ void WeatherPlugin::changeTheme() {
     hbox->addWidget(themeHint);
     QComboBox *themeSelect = new QComboBox();
     themeSelect->addItems(themeSet);
+    themeSelect->setCurrentText(forcastApplet->theme());
     hbox->addWidget(themeSelect);
     vbox->addLayout(hbox);
 
@@ -194,8 +195,10 @@ void WeatherPlugin::changeTheme() {
     dialog->setLayout(vbox);
     if(dialog->exec() == QDialog::Accepted){
         QString thm = themeSelect->currentText();
+        // qDebug() << "accept theme" << thm;
         m_settings.setValue("theme", thm);
         forcastApplet->setTheme(thm);
+        forcastApplet->updateWeather(); // TODO: seperate plotting and updating
     }
     dialog->close();
 }

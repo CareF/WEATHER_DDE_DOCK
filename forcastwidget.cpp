@@ -19,7 +19,7 @@ ForcastWidget::ForcastWidget(QString thm, QWidget *parent)
     QGridLayout *layout = new QGridLayout;
     for (int i=0; i<6; i++) {
         labelWImg[i] = new QLabel;
-        labelWImg[i]->setPixmap(QPixmap(":/"+themeName+"/icon/na.png").scaled(50,50,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+        labelWImg[i]->setPixmap(QPixmap(QString(":/%1/icon/%1/na.png").arg(themeName)).scaled(50,50,Qt::KeepAspectRatio,Qt::SmoothTransformation));
         labelWImg[i]->setAlignment(Qt::AlignCenter);
         layout->addWidget(labelWImg[i],i,0);
         labelTemp[i] = new QLabel("25°C");
@@ -52,7 +52,7 @@ void ForcastWidget::updateWeather()
     QString city = m_settings.value("city","").toString();
     QString country = m_settings.value("country","").toString();
     if(city != "" && country != ""){
-        emit weatherNow("Weather", "Temp", currentDateTime.toString("yyyy/MM/dd HH:mm:ss") + "\nGetting weather of " + city + "," + country, QPixmap(":/"+themeName+"icon/na.png"));
+        emit weatherNow("Weather", "Temp", currentDateTime.toString("yyyy/MM/dd HH:mm:ss") + "\nGetting weather of " + city + "," + country, QPixmap(QString(":/%1/icon/%1/na.png").arg(themeName)));
         QString appid = "8f3c852b69f0417fac76cd52c894ba63";
         surl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&appid=" + appid;
         reply = manager.get(QNetworkRequest(QUrl(surl)));
@@ -82,7 +82,7 @@ void ForcastWidget::updateWeather()
                     stemp = QString::number(qRound(temp)) + "°C";
                     QString humidity = "RH: " + QString::number(list[i].toObject().value("main").toObject().value("humidity").toInt()) + "%";
                     QString weather = list[i].toObject().value("weather").toArray().at(0).toObject().value("main").toString();
-                    QString sicon = ":/" + themeName + "/icon/" + list[i].toObject().value("weather").toArray().at(0).toObject().value("icon").toString() + ".png";\
+                    QString sicon = QString(":/%1/icon/%1/").arg(themeName) + list[i].toObject().value("weather").toArray().at(0).toObject().value("icon").toString() + ".png";\
                     QString wind = "Wind: " + QString::number(list[i].toObject().value("wind").toObject().value("speed").toDouble()) + "m/s, " + QString::number(qRound(list[i].toObject().value("wind").toObject().value("deg").toDouble())) + "°";
                     log += dt_txt + ", " + date.toString("yyyy-MM-dd HH:mm:ss ddd") + ", " + stemp + ", " + humidity + ","+ weather + ", " + sicon + ", " + wind + "\n";
                     if(date.time() == QTime(12,0,0)){
@@ -106,10 +106,10 @@ void ForcastWidget::updateWeather()
                     }
                 }
             } else {
-                emit weatherNow("Weather", "Temp", cod + "\n" + JD.object().value("message").toString(), QPixmap(":/"+themeName+"icon/na.png"));
+                emit weatherNow("Weather", "Temp", cod + "\n" + JD.object().value("message").toString(), QPixmap(QString(":/%1/icon/%1/na.png").arg(themeName)));
             }
         }else{
-            emit weatherNow("Weather", "Temp", QString(BA), QPixmap(":/"+themeName+"icon/na.png"));
+            emit weatherNow("Weather", "Temp", QString(BA), QPixmap(QString(":/%1/icon/%1/na.png").arg(themeName)));
         }
 
         // log
