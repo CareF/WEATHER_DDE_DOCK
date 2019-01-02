@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/hty">
         <file>icon/01d.png</file>
         <file>icon/02n.png</file>
         <file>icon/50d.png</file>
@@ -20,4 +20,5 @@
         <file>icon/03d.png</file>
         <file>icon/na.png</file>
     </qresource>
+    <qresource prefix="/newtheme"/>
 </RCC>

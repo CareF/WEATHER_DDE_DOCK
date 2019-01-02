@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QPushButton>
+#include <QDialogButtonBox>
 
 WeatherPlugin::WeatherPlugin(QObject *parent)
     : QObject(parent),
@@ -18,13 +19,12 @@ WeatherPlugin::WeatherPlugin(QObject *parent)
     m_tipsLabel->setObjectName("HTYWeather");
     m_tipsLabel->setStyleSheet("color:white; padding:0px 3px;");
 
-    m_centralWidget = new WeatherWidget;
-    connect(m_centralWidget, &WeatherWidget::requestContextMenu, [this] { m_proxyInter->requestContextMenu(this, QString()); });
-    connect(m_centralWidget, &WeatherWidget::requestUpdateGeometry, [this] { m_proxyInter->itemUpdate(this, QString()); });
-
-    forcastApplet = new ForcastWidget;
+    forcastApplet = new ForcastWidget(m_settings.value("theme", "hty").toString(), nullptr);
+    m_centralWidget = new WeatherWidget(forcastApplet, nullptr);
     forcastApplet->setObjectName("forcast");
     forcastApplet->setVisible(false);
+    connect(m_centralWidget, &WeatherWidget::requestContextMenu, [this] { m_proxyInter->requestContextMenu(this, QString()); });
+    connect(m_centralWidget, &WeatherWidget::requestUpdateGeometry, [this] { m_proxyInter->itemUpdate(this, QString()); });
     connect(forcastApplet, SIGNAL(weatherNow(QString,QString,QString,QPixmap)), this, SLOT(weatherNow(QString,QString,QString,QPixmap)));
     forcastApplet->updateWeather();
 
@@ -113,9 +113,15 @@ const QString WeatherPlugin::itemContextMenu(const QString &itemKey)
 
     QMap<QString, QVariant> set;
     set["itemId"] = "set";
-    set["itemText"] = "Set";
+    set["itemText"] = "Settings";
     set["isActive"] = true;
     items.push_back(set);
+
+    QMap<QString, QVariant> themeItem;
+    themeItem["itemId"] = "theme";
+    themeItem["itemText"] = "Themes";
+    themeItem["isActive"] = true;
+    items.push_back(themeItem);
 
     QMap<QString, QVariant> refresh;
     refresh["itemId"] = "refresh";
@@ -159,13 +165,50 @@ void WeatherPlugin::invokedMenuItem(const QString &itemKey, const QString &menuI
     }else if(menuId=="log"){
         showLog();
     }
+    else if(menuId=="theme"){
+        changeTheme();
+    }
 
+}
+
+const QStringList WeatherPlugin::themeSet({"hty"});
+void WeatherPlugin::changeTheme() {
+    QDialog *dialog = new QDialog;
+    dialog->setWindowTitle("Change Theme");
+    QVBoxLayout *vbox = new QVBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout;
+
+    QLabel *themeHint = new QLabel("Select Theme: ");
+    hbox->addWidget(themeHint);
+    QComboBox *themeSelect = new QComboBox();
+    themeSelect->addItems(themeSet);
+    hbox->addWidget(themeSelect);
+    vbox->addLayout(hbox);
+
+    QDialogButtonBox *buttons = new QDialogButtonBox(
+                QDialogButtonBox::Ok|QDialogButtonBox::Cancel, dialog);
+    connect(buttons, SIGNAL(rejected()), dialog, SLOT(reject()));
+    connect(buttons, SIGNAL(accepted()), dialog, SLOT(accept()));
+    vbox->addWidget(buttons);
+
+    dialog->setLayout(vbox);
+    if(dialog->exec() == QDialog::Accepted){
+        QString thm = themeSelect->currentText();
+        m_settings.setValue("theme", thm);
+        forcastApplet->setTheme(thm);
+    }
+    dialog->close();
 }
 
 void WeatherPlugin::MBAbout()
 {
-    QMessageBox aboutMB(QMessageBox::NoIcon, "HTYWeather 5.1", "About\n\nDeepin Linux Dock Weather Plugin.\nAuthor: 黄颖\nE-mail: sonichy@163.com\nSource: https://github.com/sonichy/WEATHER_DDE_DOCK\nAPI: https://openweathermap.org/forecast5");
-    aboutMB.setIconPixmap(QPixmap(":/icon/01d.png"));
+    QMessageBox aboutMB(QMessageBox::NoIcon, "HTYWeather 5.1", "About\n\n"
+                        "Deepin Linux Dock Weather Plugin.\n"
+                        "Maintainer: CareF\nE-mail: me@mail.caref.xyz\n"
+                        "Original Author: 黄颖\nE-mail: sonichy@163.com\n"
+                        "Source: https://github.com/sonichy/WEATHER_DDE_DOCK\n"
+                        "API: https://openweathermap.org/forecast5");
+    aboutMB.setIconPixmap(QPixmap(":/hty/icon/01d.png"));
     aboutMB.exec();
 }
 

@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include <QSettings>
+#include "forcastwidget.h"
 
 class WeatherWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit WeatherWidget(QWidget *parent = 0);
+    explicit WeatherWidget(const ForcastWidget *wgt, QWidget *parent = nullptr);
     bool enabled();
     void setEnabled(const bool b);
     QString sw, temp;
@@ -27,6 +28,7 @@ private:
     void paintEvent(QPaintEvent *e);
     void mousePressEvent(QMouseEvent *e);
     QSettings m_settings;
+    const ForcastWidget *forcastwidget;
 };
 
 #endif // WEATHERWIDGET_H

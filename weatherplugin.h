@@ -48,10 +48,13 @@ private:
     QTimer *m_refershTimer;
     QSettings m_settings;
     ForcastWidget *forcastApplet;
+    QString theme;
     void MBAbout();
     void showMap();
     void showLog();
     void set();
+    void changeTheme();
+    static const QStringList themeSet;
 };
 
 #endif // WEATHERPlugin_H

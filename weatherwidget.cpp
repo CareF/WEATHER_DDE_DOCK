@@ -8,13 +8,14 @@
 
 #define PLUGIN_STATE_KEY    "enable"
 
-WeatherWidget::WeatherWidget(QWidget *parent)
+WeatherWidget::WeatherWidget(const ForcastWidget *wgt, QWidget *parent)
     : QWidget(parent),
-    m_settings("deepin", "dde-dock-HTYWeather")
+    m_settings("deepin", "dde-dock-HTYWeather"),
+    forcastwidget(wgt)
 {
     sw = "Weather";
     temp = "Temp";
-    pixmap = QPixmap(":icon/na.png");
+    pixmap = QPixmap(":/"+forcastwidget->theme()+"/icon/na.png");
 }
 
 bool WeatherWidget::enabled()
@@ -39,7 +40,7 @@ QSize WeatherWidget::sizeHint() const
             size = FM.boundingRect(temp).size() + QSize(10,FM.boundingRect(temp).height());
         }
     }else{
-        size = QPixmap(":icon/na.png").size();
+        size = QPixmap(":/"+forcastwidget->theme()+"icon/na.png").size();
     }
     return size;
 }
