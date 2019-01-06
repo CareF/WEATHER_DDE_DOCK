@@ -47,12 +47,15 @@ QSize WeatherWidget::sizeHint() const
 
 void WeatherWidget::resizeEvent(QResizeEvent *e)
 {
+    const auto ratio = qApp->devicePixelRatio();
+    pixmap.setDevicePixelRatio(ratio);
     QWidget::resizeEvent(e);
 }
 
 void WeatherWidget::paintEvent(QPaintEvent *e)
 {
-    Q_UNUSED(e);
+    Q_UNUSED(e)
+    // QWidget::paintEvent(e);
     const Dock::DisplayMode displayMode = qApp->property(PROP_DISPLAY_MODE).value<Dock::DisplayMode>();
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -61,8 +64,16 @@ void WeatherWidget::paintEvent(QPaintEvent *e)
     if (displayMode == Dock::Efficient) {
         painter.drawText(rect(), Qt::AlignCenter, sw + "\n" + temp);
     } else {
-        painter.drawPixmap(rect(), pixmap);
+        const auto ratio = qApp->devicePixelRatio();
+        const int iconSize =  static_cast<int> (ratio * std::min(width(), height()));
+        QPixmap qpixscaled = pixmap.scaled(iconSize, iconSize, Qt::KeepAspectRatio);
+        const QRectF &rf = QRectF(rect());
+        const QRectF &rfp = QRectF(qpixscaled.rect());
+        painter.drawPixmap(rf.center() - rfp.center() / qpixscaled.devicePixelRatioF(),
+                           qpixscaled);
     }
+
+
 }
 
 void WeatherWidget::mousePressEvent(QMouseEvent *e)

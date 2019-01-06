@@ -219,6 +219,8 @@ void WeatherPlugin::weatherNow(QString weather, QString temp, QString stip, QPix
 {
     m_centralWidget->sw = weather;
     m_centralWidget->temp = temp;
+    const auto ratio = qApp->devicePixelRatio();
+    pixmap.setDevicePixelRatio(ratio);
     m_centralWidget->pixmap = pixmap;
     m_tipsLabel->setText(stip);
 }
