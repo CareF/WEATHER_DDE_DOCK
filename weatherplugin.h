@@ -18,7 +18,7 @@ class WeatherPlugin : public QObject, PluginsItemInterface
     Q_PLUGIN_METADATA(IID "com.deepin.dock.PluginsItemInterface" FILE "weather.json")
 
 public:
-    explicit WeatherPlugin(QObject *parent = 0);
+    explicit WeatherPlugin(QObject *parent = nullptr);
 
     const QString pluginName() const override;
     const QString pluginDisplayName() const override;
@@ -28,12 +28,12 @@ public:
     bool pluginIsAllowDisable() override { return true; }
     bool pluginIsDisable() override;
 
-    int itemSortKey(const QString &itemKey);
-    void setSortKey(const QString &itemKey, const int order);
+    int itemSortKey(const QString &itemKey) override;
+    void setSortKey(const QString &itemKey, const int order) override;
 
     QWidget *itemWidget(const QString &itemKey) override;
     QWidget *itemTipsWidget(const QString &itemKey) override;
-    QWidget *itemPopupApplet(const QString &itemKey);
+    QWidget *itemPopupApplet(const QString &itemKey) override;
 
     const QString itemContextMenu(const QString &itemKey) override;
 
@@ -50,7 +50,6 @@ private:
     ForcastWidget *forcastApplet;
     QString theme;
     void MBAbout();
-    void showMap();
     void showLog();
     void set();
     void changeTheme();
