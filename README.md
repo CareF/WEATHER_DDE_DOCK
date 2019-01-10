@@ -19,6 +19,9 @@ sudo make install
 ![alt](preview.png)  
 ![alt](FashionMode.png)  
 
+### 5.3 (2019-01-10)
+Update to API v1.1.1, remove cloud map
+
 ### 5.2 (2019-01-02)
 Add themes (icon and suggestions credit to [aiamuzz](https://github.com/aiamuzz)
 
