@@ -23,7 +23,6 @@ WeatherPlugin::WeatherPlugin(QObject *parent)
     m_centralWidget = new WeatherWidget(forcastApplet, nullptr);
     forcastApplet->setObjectName("forcast");
     forcastApplet->setVisible(false);
-    connect(m_centralWidget, &WeatherWidget::requestContextMenu, [this] { m_proxyInter->requestContextMenu(this, QString()); });
     connect(m_centralWidget, &WeatherWidget::requestUpdateGeometry, [this] { m_proxyInter->itemUpdate(this, QString()); });
     connect(forcastApplet, SIGNAL(weatherNow(QString,QString,QString,QPixmap)), this, SLOT(weatherNow(QString,QString,QString,QPixmap)));
     forcastApplet->updateWeather();

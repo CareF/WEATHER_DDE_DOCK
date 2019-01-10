@@ -1,6 +1,3 @@
-
-#include(../dde-dock/interfaces/interfaces.pri)
-
 QT              += widgets svg network
 TEMPLATE         = lib
 CONFIG          += plugin c++11 link_pkgconfig
