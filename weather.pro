@@ -3,7 +3,7 @@ TEMPLATE         = lib
 CONFIG          += plugin c++11 link_pkgconfig
 PKGCONFIG       += dtkwidget
 
-TARGET           = $$qtLibraryTarget(weather)
+TARGET           = $$qtLibraryTarget(HTYweather)
 DESTDIR          = $$_PRO_FILE_PWD_
 DISTFILES       += weather.json
 
