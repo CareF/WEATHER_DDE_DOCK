@@ -5,12 +5,12 @@
 #include <QSettings>
 #include "forcastapplet.h"
 
-class WeatherWidget : public QWidget
+class WeatherItem : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit WeatherWidget(const ForcastApplet *wgt, QWidget *parent = nullptr);
+    explicit WeatherItem(const ForcastApplet *wgt, QWidget *parent = nullptr);
     bool enabled();
     void setEnabled(const bool b);
     QString sw, temp;

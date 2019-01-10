@@ -1,5 +1,5 @@
 #include "dde-dock/constants.h"
-#include "weatherwidget.h"
+#include "weatheritem.h"
 #include <QApplication>
 #include <QPainter>
 #include <QDebug>
@@ -8,7 +8,7 @@
 
 #define PLUGIN_STATE_KEY    "enable"
 
-WeatherWidget::WeatherWidget(const ForcastApplet *wgt, QWidget *parent)
+WeatherItem::WeatherItem(const ForcastApplet *wgt, QWidget *parent)
     : QWidget(parent),
     m_settings("deepin", "dde-dock-HTYWeather"),
     forcastwidget(wgt)
@@ -18,17 +18,17 @@ WeatherWidget::WeatherWidget(const ForcastApplet *wgt, QWidget *parent)
     pixmap = QPixmap(QString(":/%1/icon/%1/na.png").arg(forcastwidget->theme()));
 }
 
-bool WeatherWidget::enabled()
+bool WeatherItem::enabled()
 {
     return m_settings.value(PLUGIN_STATE_KEY, true).toBool();
 }
 
-void WeatherWidget::setEnabled(const bool b)
+void WeatherItem::setEnabled(const bool b)
 {
     m_settings.setValue(PLUGIN_STATE_KEY, b);
 }
 
-QSize WeatherWidget::sizeHint() const
+QSize WeatherItem::sizeHint() const
 {
     QFontMetrics FM(qApp->font());
     QSize size;
@@ -45,14 +45,14 @@ QSize WeatherWidget::sizeHint() const
     return size;
 }
 
-void WeatherWidget::resizeEvent(QResizeEvent *e)
+void WeatherItem::resizeEvent(QResizeEvent *e)
 {
     const auto ratio = qApp->devicePixelRatio();
     pixmap.setDevicePixelRatio(ratio);
     QWidget::resizeEvent(e);
 }
 
-void WeatherWidget::paintEvent(QPaintEvent *e)
+void WeatherItem::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e)
     // QWidget::paintEvent(e);

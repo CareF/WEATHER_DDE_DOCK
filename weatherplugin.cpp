@@ -20,10 +20,10 @@ WeatherPlugin::WeatherPlugin(QObject *parent)
     m_tipsLabel->setStyleSheet("color:white; padding:0px 3px;");
 
     forcastApplet = new ForcastApplet(m_settings.value("theme", "hty").toString(), nullptr);
-    m_centralWidget = new WeatherWidget(forcastApplet, nullptr);
+    m_centralWidget = new WeatherItem(forcastApplet, nullptr);
     forcastApplet->setObjectName("forcast");
     forcastApplet->setVisible(false);
-    connect(m_centralWidget, &WeatherWidget::requestUpdateGeometry, [this] { m_proxyInter->itemUpdate(this, QString()); });
+    connect(m_centralWidget, &WeatherItem::requestUpdateGeometry, [this] { m_proxyInter->itemUpdate(this, QString()); });
     connect(forcastApplet, SIGNAL(weatherNow(QString,QString,QString,QPixmap)), this, SLOT(weatherNow(QString,QString,QString,QPixmap)));
     forcastApplet->updateWeather();
 

@@ -2,7 +2,7 @@
 #define WEATHERPlugin_H
 
 #include "dde-dock/pluginsiteminterface.h"
-#include "weatherwidget.h"
+#include "weatheritem.h"
 #include "forcastapplet.h"
 #include <QTimer>
 #include <QLabel>
@@ -43,7 +43,7 @@ private slots:
     void weatherNow(QString weather, QString temp, QString stip, QPixmap pixmap);
 
 private:
-    QPointer<WeatherWidget> m_centralWidget;
+    QPointer<WeatherItem> m_centralWidget;
     QPointer<QLabel> m_tipsLabel;
     QTimer *m_refershTimer;
     QSettings m_settings;

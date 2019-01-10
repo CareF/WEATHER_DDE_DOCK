@@ -3,20 +3,23 @@ TEMPLATE         = lib
 CONFIG          += plugin c++11 link_pkgconfig
 PKGCONFIG       += dtkwidget
 
-#TARGET          = $$qtLibraryTarget(datetime)
-TARGET           = HTYWeather
-#DESTDIR          = $$_PRO_FILE_PWD_/../
+TARGET           = $$qtLibraryTarget(weather)
+DESTDIR          = $$_PRO_FILE_PWD_
 DISTFILES       += weather.json
 
 HEADERS += \
     weatherplugin.h \
-    weatherwidget.h \
-    forcastapplet.h
+    forcastapplet.h \
+    weatheritem.h
 
 SOURCES += \
     weatherplugin.cpp \
-    weatherwidget.cpp \
-    forcastapplet.cpp
+    forcastapplet.cpp \
+    weatheritem.cpp
+
+isEmpty(PREFIX) {
+    PREFIX = /usr
+}
 
 target.path = $${PREFIX}/lib/dde-dock/plugins/
 INSTALLS += target
