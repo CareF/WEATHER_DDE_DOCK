@@ -6,12 +6,12 @@
 #include <QLabel>
 #include <QSettings>
 
-class ForcastWidget : public QWidget
+class ForcastApplet : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ForcastWidget(QString theme="hty", QWidget *parent = nullptr);
+    explicit ForcastApplet(QString theme="hty", QWidget *parent = nullptr);
     void setTheme(const QString& theme);
     const QString& theme() const {return themeName;}
 

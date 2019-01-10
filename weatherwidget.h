@@ -3,14 +3,14 @@
 
 #include <QWidget>
 #include <QSettings>
-#include "forcastwidget.h"
+#include "forcastapplet.h"
 
 class WeatherWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit WeatherWidget(const ForcastWidget *wgt, QWidget *parent = nullptr);
+    explicit WeatherWidget(const ForcastApplet *wgt, QWidget *parent = nullptr);
     bool enabled();
     void setEnabled(const bool b);
     QString sw, temp;
@@ -26,7 +26,7 @@ private:
     void resizeEvent(QResizeEvent *e);
     void paintEvent(QPaintEvent *e);
     QSettings m_settings;
-    const ForcastWidget *forcastwidget;
+    const ForcastApplet *forcastwidget;
 };
 
 #endif // WEATHERWIDGET_H

@@ -19,7 +19,7 @@ WeatherPlugin::WeatherPlugin(QObject *parent)
     m_tipsLabel->setObjectName("HTYWeather");
     m_tipsLabel->setStyleSheet("color:white; padding:0px 3px;");
 
-    forcastApplet = new ForcastWidget(m_settings.value("theme", "hty").toString(), nullptr);
+    forcastApplet = new ForcastApplet(m_settings.value("theme", "hty").toString(), nullptr);
     m_centralWidget = new WeatherWidget(forcastApplet, nullptr);
     forcastApplet->setObjectName("forcast");
     forcastApplet->setVisible(false);
@@ -29,7 +29,7 @@ WeatherPlugin::WeatherPlugin(QObject *parent)
 
     m_refershTimer->setInterval(3600000);
     m_refershTimer->start();
-    connect(m_refershTimer, &QTimer::timeout, forcastApplet, &ForcastWidget::updateWeather);
+    connect(m_refershTimer, &QTimer::timeout, forcastApplet, &ForcastApplet::updateWeather);
 
 }
 

@@ -1,4 +1,4 @@
-#include "forcastwidget.h"
+#include "forcastapplet.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QEventLoop>
@@ -9,7 +9,7 @@
 #include <QStandardPaths>
 #include <QTimeZone>
 
-ForcastWidget::ForcastWidget(QString thm, QWidget *parent)
+ForcastApplet::ForcastApplet(QString thm, QWidget *parent)
     : QWidget(parent),
       m_settings("deepin", "dde-dock-HTYWeather"),
       themeName(thm)
@@ -40,7 +40,7 @@ ForcastWidget::ForcastWidget(QString thm, QWidget *parent)
     setLayout(layout);
 }
 
-void ForcastWidget::updateWeather()
+void ForcastApplet::updateWeather()
 {
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString sw = "", stemp = "", stip = "", surl="";
@@ -122,7 +122,7 @@ void ForcastWidget::updateWeather()
     }
 }
 
-QString ForcastWidget::translateWeather(QString s)
+QString ForcastApplet::translateWeather(QString s)
 {
     QString sc = "";
     if(s == "Atmosphere"){
@@ -143,6 +143,6 @@ QString ForcastWidget::translateWeather(QString s)
     return sc;
 }
 
-void ForcastWidget::setTheme(const QString &theme) {
+void ForcastApplet::setTheme(const QString &theme) {
     themeName = theme;
 }

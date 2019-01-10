@@ -8,7 +8,7 @@
 
 #define PLUGIN_STATE_KEY    "enable"
 
-WeatherWidget::WeatherWidget(const ForcastWidget *wgt, QWidget *parent)
+WeatherWidget::WeatherWidget(const ForcastApplet *wgt, QWidget *parent)
     : QWidget(parent),
     m_settings("deepin", "dde-dock-HTYWeather"),
     forcastwidget(wgt)

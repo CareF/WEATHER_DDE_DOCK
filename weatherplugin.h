@@ -3,7 +3,7 @@
 
 #include "dde-dock/pluginsiteminterface.h"
 #include "weatherwidget.h"
-#include "forcastwidget.h"
+#include "forcastapplet.h"
 #include <QTimer>
 #include <QLabel>
 #include <QGridLayout>
@@ -47,7 +47,7 @@ private:
     QPointer<QLabel> m_tipsLabel;
     QTimer *m_refershTimer;
     QSettings m_settings;
-    ForcastWidget *forcastApplet;
+    ForcastApplet *forcastApplet;
     QString theme;
     void MBAbout();
     void showLog();
