@@ -19,6 +19,9 @@ sudo make install
 ![alt](preview.png)  
 ![alt](FashionMode.png)  
 
+### 5.3.1 (2019-01-11)
+Add Celsius/Fahrenheit switch
+
 ### 5.3 (2019-01-10)
 Update to API v1.1.1, remove cloud map
 
