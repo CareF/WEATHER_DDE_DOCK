@@ -14,6 +14,8 @@ public:
     explicit ForcastApplet(QString theme="hty", QWidget *parent = nullptr);
     void setTheme(const QString& theme);
     const QString& theme() const {return themeName;}
+    bool isCelsius() const {return _isCelsius;}
+    void switchUnit();
 
 private:
     QVBoxLayout *m_centralLayout;
@@ -22,6 +24,7 @@ private:
     QString translateWeather(QString s);
     QSettings m_settings;
     QString themeName;
+    bool _isCelsius;
 
 public slots:
     void updateWeather();

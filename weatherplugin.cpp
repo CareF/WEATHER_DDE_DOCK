@@ -116,6 +116,15 @@ const QString WeatherPlugin::itemContextMenu(const QString &itemKey)
     set["isActive"] = true;
     items.push_back(set);
 
+    QMap<QString, QVariant> celsius;
+    celsius["itemId"] = "celsius";
+    if (forcastApplet->isCelsius())
+        celsius["itemText"] = "Show Fahrenheit";
+    else
+        celsius["itemText"] = "Show Celsius";
+    celsius["isActive"] = true;
+    items.push_back(celsius);
+
     QMap<QString, QVariant> themeItem;
     themeItem["itemId"] = "theme";
     themeItem["itemText"] = "Themes";
@@ -150,6 +159,8 @@ void WeatherPlugin::invokedMenuItem(const QString &itemKey, const QString &menuI
         MBAbout();
     }else if(menuId=="set"){
         set();
+    }else if(menuId=="celsius"){
+        forcastApplet->switchUnit();
     }else if(menuId=="refresh"){
         forcastApplet->updateWeather();
         m_refershTimer->start();

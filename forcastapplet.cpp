@@ -37,7 +37,15 @@ ForcastApplet::ForcastApplet(QString thm, QWidget *parent)
         labelDate[i]->setAlignment(Qt::AlignCenter);
         layout->addWidget(labelDate[i],i,2);
     }
+    _isCelsius = m_settings.value("isCelsius", true).toBool();
     setLayout(layout);
+}
+
+void ForcastApplet::switchUnit()
+{
+    _isCelsius = !_isCelsius;
+    m_settings.setValue("isCelsius", _isCelsius);
+    updateWeather();
 }
 
 void ForcastApplet::updateWeather()
@@ -79,7 +87,12 @@ void ForcastApplet::updateWeather()
                     QString sdate = date.toString("MM-dd ddd");
                     QString dt_txt = list[i].toObject().value("dt_txt").toString();
                     double temp = list[i].toObject().value("main").toObject().value("temp").toDouble() - 273.15;
-                    stemp = QString::number(qRound(temp)) + "°C";
+                    if (_isCelsius) {
+                        stemp = QString::number(qRound(temp)) + "°C";
+                    }
+                    else {
+                        stemp = QString::number(qRound(temp * 1.8 + 32)) + "°F";
+                    }
                     QString humidity = "RH: " + QString::number(list[i].toObject().value("main").toObject().value("humidity").toInt()) + "%";
                     QString weather = list[i].toObject().value("weather").toArray().at(0).toObject().value("main").toString();
                     QString sicon = QString(":/%1/icon/%1/").arg(themeName) + list[i].toObject().value("weather").toArray().at(0).toObject().value("icon").toString() + ".png";\
